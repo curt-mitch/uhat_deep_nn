@@ -1,4 +1,4 @@
-# uhat_deep_nn
+# UHaT Deep Neural Network
 Creating a deep neural network for recognizing handwritten Urdu characters and numbers.
 
 The intention for this project is to create a reasonably accurate neural network using only Python's native library and Numpy.
