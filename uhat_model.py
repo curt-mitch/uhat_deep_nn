@@ -10,4 +10,3 @@ with np.load('UHaT/uhat_dataset.npz') as data:
     train_digits_labels = data['y_digits_train']
     test_chars_labels = data['y_chars_test']
     test_digits_labels = data['y_digits_test']
-    print(len(train_chars_labels))
