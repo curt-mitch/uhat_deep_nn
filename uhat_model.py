@@ -11,6 +11,10 @@ with np.load('uhat_dataset.npz') as data:
     test_chars_labels = data['y_chars_test']
     test_digits_labels = data['y_digits_test']
 
+# shift values of character labels to avoid overlapping with digit labels
+train_chars_labels = [(label_val + 10) for label_val in train_chars_labels]
+test_chars_labels = [(label_val + 10) for label_val in test_chars_labels]
+
 # merge character and digit data
 train_data = np.concatenate([train_chars_data, train_digits_data], axis=0)
 test_data = np.concatenate([test_chars_data, test_digits_data], axis=0)
