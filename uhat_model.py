@@ -27,3 +27,6 @@ test_data = test_data.reshape(len(test_data), 28*28)
 
 # create one-hot encodings for labels
 one_hot_labels = np.zeros((len(train_labels), 50))
+
+for i,l in enumerate(train_labels):
+  one_hot_labels[i][l] = 1
