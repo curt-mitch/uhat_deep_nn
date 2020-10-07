@@ -16,8 +16,14 @@ train_chars_labels = [(label_val + 10) for label_val in train_chars_labels]
 test_chars_labels = [(label_val + 10) for label_val in test_chars_labels]
 
 # merge character and digit data
-train_data = np.concatenate([train_chars_data, train_digits_data], axis=0)
-test_data = np.concatenate([test_chars_data, test_digits_data], axis=0)
-train_labels = np.concatenate([train_chars_labels, train_digits_labels])
-test_labels = np.concatenate([test_chars_labels, test_digits_labels])
+train_data = np.concatenate([train_digits_data, train_chars_data], axis=0)
+test_data = np.concatenate([test_digits_data, test_chars_data], axis=0)
+train_labels = np.concatenate([train_digits_labels, train_chars_labels])
+test_labels = np.concatenate([test_digits_labels, test_chars_labels])
 
+# reshape to flatten images
+train_data = train_data.reshape(len(train_data), 28*28)
+test_data = test_data.reshape(len(test_data), 28*28)
+
+# create one-hot encodings for labels
+one_hot_labels = np.zeros((len(train_labels), 50))
