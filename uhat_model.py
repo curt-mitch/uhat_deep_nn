@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 # from PIL import Image
 
@@ -35,6 +36,8 @@ train_labels = one_hot_labels
 # set up loss function and hyperparameters
 np.random.seed(1)
 
+# TODO: https://stackoverflow.com/questions/7559595/python-runtimewarning-overflow-encountered-in-long-scalars
+
 
 def relu(x):
     '''return x if x > 0, otherwise return 0'''
@@ -47,9 +50,32 @@ def relu2deriv(x):
 
 
 alpha = 0.005
-iterations = 350
+# iterations = 350
+iterations = 1
 hidden_size = 40
 pixels_per_image = 28*28
 num_labels = 50
 weights_0_1 = 0.2 * np.random.random((pixels_per_image, hidden_size)) - 0.1
 weights_1_2 = 0.2 * np.random.random((hidden_size, num_labels)) - 0.1
+
+for j in range(iterations):
+    error = 0.0
+    correct_count = 0
+    for i in range(1000):
+        layer_0 = train_data[i:i+1]
+        layer_1 = relu(np.dot(layer_0, weights_0_1))
+        layer_2 = np.dot(layer_1, weights_1_2)
+        error += np.sum((train_labels[i:i+1] - layer_2) ** 2)
+        correct_count += int(np.argmax(layer_2) ==
+                             np.argmax(train_labels[i:i+1]))
+        layer_2_delta = (train_labels[i:i+1] - layer_2)
+        layer_1_delta = np.dot(layer_2_delta, weights_1_2.T)\
+            * relu2deriv(layer_1)
+        weights_1_2 += alpha * np.dot(layer_1.T, layer_2_delta)
+        weights_0_1 += alpha * np.dot(layer_0.T, layer_1_delta)
+        if i % 1000 == 0:
+            print('weights', weights_0_1)
+    sys.stdout.write("\r" +
+                     " I:" + str(j) +
+                     " Error:" + str(error / float(len(train_data)))[0:5] +
+                     " Correct:" + str(correct_count / float(len(train_data))))
