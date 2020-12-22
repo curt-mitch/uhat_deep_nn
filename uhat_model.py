@@ -64,7 +64,24 @@ for j in range(iterations):
             * relu2deriv(layer_1)
         weights_1_2 += alpha * np.dot(layer_1.T, layer_2_delta)
         weights_0_1 += alpha * np.dot(layer_0.T, layer_1_delta)
+    reported_error = str(error / float(len(train_data)))[0:5]
+    reported_percent_correct = str(correct_count / float(len(train_data)))
     sys.stdout.write("\r" +
                      " I:" + str(j) +
-                     " Error:" + str(error / float(len(train_data)))[0:5] +
-                     " Correct:" + str(correct_count / float(len(train_data))))
+                     " Error:" + reported_error +
+                     " Correct:" + reported_percent_correct)
+    if (j % 10 == 0 or j == iterations - 1):
+        error = 0.0
+        correct_count = 0
+
+        for i in range(len(test_data)):
+            layer_0 = test_data[i:i+1]
+            layer_1 = relu(np.dot(layer_0, weights_0_1))
+            layer_2 = np.dot(layer_1, weights_1_2)
+            error += np.sum((test_labels[i:i+1] - layer_2) ** 2)
+            correct_count += int(np.argmax(layer_2) ==
+                                 np.argmax(train_labels[i:i+1]))
+        reported_error = str(error / float(len(test_data)))[0:5]
+        reported_percent_correct = str(correct_count / float(len(test_labels)))
+        sys.stdout.write(" Test-Err:" + reported_error +
+                         " Test-Acc:" + reported_percent_correct)
