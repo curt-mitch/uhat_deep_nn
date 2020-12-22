@@ -13,11 +13,16 @@ train_data = train_data.reshape(len(train_data), 28*28) / 255
 test_data = test_data.reshape(len(test_data), 28*28) / 255
 
 # create one-hot encodings for labels
-one_hot_labels = np.zeros((len(train_labels), 40))
+one_hot_train_labels = np.zeros((len(train_labels), 40))
+one_hot_test_labels = np.zeros((len(test_labels), 40))
 
 for i, l in enumerate(train_labels):
-    one_hot_labels[i][l] = 1
-train_labels = one_hot_labels
+    one_hot_train_labels[i][l] = 1
+train_labels = one_hot_train_labels
+
+for i, l in enumerate(test_labels):
+    one_hot_test_labels[i][l] = 1
+test_labels = one_hot_test_labels
 
 # set up loss function and hyperparameters
 np.random.seed(1)
