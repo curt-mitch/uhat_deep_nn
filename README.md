@@ -1,5 +1,5 @@
 # UHaT Deep Neural Network
-Creating a deep neural network for recognizing handwritten Urdu characters and numbers.
+Creating a deep neural network for recognizing handwritten Urdu characters.
 
 The intention for this project is to create a reasonably accurate neural network without using a DL framework such as Tensorflow or PyTorch.
 

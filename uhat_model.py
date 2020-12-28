@@ -29,7 +29,7 @@ np.random.seed(1)
 
 
 def relu(x):
-    '''return x if x > 0, otherwise return 0'''
+    '''return x if x >= 0, otherwise return 0'''
     return (x >= 0) * x
 
 
