@@ -7,7 +7,7 @@ with np.load('uhat_dataset.npz') as data:
     train_labels = data['y_chars_train']
     test_labels = data['y_chars_test']
 
-# reshape to flatten images
+# reshape to flatten and normalize image data
 train_data = train_data.reshape(len(train_data), 28*28) / 255
 test_data = test_data.reshape(len(test_data), 28*28) / 255
 
